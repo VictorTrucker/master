@@ -1,2 +1,2 @@
 # Java Code Samples
-Root repository for Java code samples
+Root repository for Java code samples ... These samples range in complexity from extremely simple to marginally complex ...
