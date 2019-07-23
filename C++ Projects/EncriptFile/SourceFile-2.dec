@@ -1,0 +1,72 @@
+======================================================================== 
+MICROSOFT FOUNDATION CLASS LIBRARY : AWS_1314 
+======================================================================== 
+
+
+AppWizard has created this AWS_1314 application for you. This application 
+not only demonstrates the basics of using the Microsoft Foundation classes 
+but is also a starting point for writing your application. 
+
+This file contains a summary of what you will find in each of the files that 
+make up your AWS_1314 application. This can't be changed. 
+
+AWS_1314.h 
+This is the main header file for the application. It includes other 
+project specific headers (including Resource.h) and declares the 
+CAWS_1314App application class. 
+
+AWS_1314.cpp 
+This is the main application source file that contains the application 
+class CAWS_1314App. 
+
+AWS_1314.clw 
+This file contains information used by ClassWizard to edit existing 
+classes or add new classes. ClassWizard also uses this file to store 
+information needed to create and edit message maps and dialog data 
+maps and to create prototype member functions. 
+
+///////////////////////////////////////////////////////////////////////////// 
+
+For the main frame window: 
+
+MainFrm.h, MainFrm.cpp 
+These files contain the frame class CMainFrame, which is derived from 
+CMDIFrameWnd and controls all MDI frame features. 
+
+res\Toolbar.bmp 
+This bitmap file is used to create tiled images for the toolbar. 
+The initial toolbar and status bar are constructed in the 
+CMainFrame class. Edit this toolbar bitmap along with the 
+array in MainFrm.cpp to add more toolbar buttons. 
+
+///////////////////////////////////////////////////////////////////////////// 
+
+AppWizard creates one document type and one view: 
+
+///////////////////////////////////////////////////////////////////////////// 
+Other standard files: 
+
+StdAfx.h, StdAfx.cpp 
+These files are used to build a precompiled header (PCH) file 
+named AWS_1314.pch and a precompiled types file named StdAfx.obj. 
+
+Resource.h 
+This is the standard header file, which defines new resource IDs. 
+Microsoft Developer Studio reads and updates this file. 
+
+///////////////////////////////////////////////////////////////////////////// 
+Other notes: 
+
+AppWizard uses "TODO:" to indicate parts of the source code you 
+should add to or customize. 
+
+If your application uses MFC in a shared DLL, and your application is 
+in a language other than the operating system's current language, you 
+will need to copy the corresponding localized resources MFC40XXX.DLL 
+from the Microsoft Visual C++ CD-ROM onto the system or system32 directory, 
+and rename it to be MFCLOC.DLL. ("XXX" stands for the language abbreviation. 
+For example, MFC40DEU.DLL contains resources translated to German.) If you 
+don't do this, some of the UI elements of your application will remain in the 
+language of the operating system. 
+
+///////////////////////////////////////////////////////////////////////////// 

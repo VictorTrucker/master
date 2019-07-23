@@ -1,0 +1,94 @@
+[Do-It-Yourself Kit] For: Installer.ini 
+
+General Information: 
+
+When filling the fields with button information always fill from Button_0 to Button_X 
+leaving NO empty buttons between first and last button. If possible, always Put NIKU 
+in Button_0 (the first button). Do NOT Leave ANY >Nix< Values in ANY used buttons. To 
+do so will cause the Installer to act as though the button is invalid, and the previous 
+button will be treated as the last button in the series. For any trailing unused 
+buttons simply set ALL of it’s Values to >Nix<. This way anyone who edits the file in 
+the future will have no trouble identifying empty buttons. 
+
+Installer.ini is a very versatile file with many handy capabilities. Some of the fields 
+have multiple uses that enhance these capabilities. It can be run from a floppy for 
+purposes of just configuring multiple machines alike. It can install, copy, or move files. 
+It can custom edit INI files, properties files and standard text files as well as perform 
+Registry updates and additions. It can perform common as well as custom text substitutions 
+on the fly. To save time and aid this process ensure only good input. 
+
+
+[Do-It-Yourself Kit] For: Installer.ini 
+
+[General] *** The General Section *** 
+
+ButtonCount * Essentially this is a place to put information that applies to 
+all of the buttons as a group. At this time the General Section 
+is only used to store the Number of buttons to be displayed by 
+the Installer. The Installer can display up to 5 buttons. This 
+value is used by the button load process for looping through each 
+button. 
+
+
+[Do-It-Yourself Kit] For: Installer.ini 
+
+[Button_x] *** The Button Section *** 
+
+Label * This is the Text to be displayed next to the button on the Main 
+Installer Dialog. Keep the label short and to the point, space 
+is limited. Confirm that the label text displays properly. 
+
+Target * This is the Program that gets executed when this button gets 
+clicked. Include the entire path and filename, but you can omit 
+the drive spec unless it’s a known absolute value. The drive can 
+be determined at runtime, since we can’t know which drive the 
+CD-ROM will be, if that’s the source. 
+
+EXAMPLE: Target=Fulcrum\Setup.exe - would run Fulcrum setup 
+from the Fulcrum directory on the "Source Drive". 
+
+If this is an xCopy rather than an actual install then the Target 
+should specify the directory that is to be copied to the ROOT of 
+the drive where the NIKU application is installed. 
+
+EXAMPLE: Target=crystal - would copy the crystal directory 
+from the ROOT of the "Source Drive" and all it's 
+contents, including all of it's sub-directories empty 
+or not, <to> the NIKU Application DRIVE - i.e. D:\ 
+<or> since this is not a configured item, we can use 
+ConfigINI to store an alternate target drive if the 
+NIKU install drive is not the desired target. 
+
+ConfigINI * This is the File that contains the edit information for the first 
+file to be edited in the configuration of this item. As long as 
+this file is in the same directory as the Installer no path is 
+required. To allow flexibility the complete path to a known App 
+can be provided. (We create this file). If this is an xCopy then 
+use this field to provide an alternate target drive. If this is 
+an xCopy and no drive is to be included then enter the word None 
+here, and the target drive will be assumed to be the drive that 
+the Niku application is installed on. 
+
+EXAMPLE: ConfigINI=Config.ini <or> ConfigINI=D:\ <or> 
+ConfigINI=None 
+
+RegKey * The Registry Key used to confirm the existence of this item. This 
+key should point to the location in the Registry where Tartget’s 
+applications Installation Path Information is stored (if it were 
+already installed). For Verifying it’s existence and extracting 
+path information. 
+
+EXAMPLE: RegKey=SOFTWARE\Niku Corporation\eNiku\Version 
+RegValue=InstDir – would yield the path to the NIKU 
+Application 
+
+RegValue * The Name of the Name/Value pair that stores the installation path 
+for this item. If no path entry is made in the registry for this 
+item then use the word "None" here. 
+
+EXAMPLE: RegValue=InstDir <or> RegValue=None 
+
+Config * Do we AUTOMATE the configuration of this item or not. 
+true = Yes we configure 
+false = No we do not configure 
+xcopy = No Install EXE, A straight xCopy. We do not configure 
