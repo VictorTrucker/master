@@ -1,2 +1,2 @@
-# master
-root repository for code samples
+# Python Code Samples
+Root repository for Python code samples
