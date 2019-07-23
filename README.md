@@ -1,2 +1,2 @@
 # Master
-Root repository for C++, Java and Python code samples
+Default repository created by GitHub - unused at this time
