@@ -10,16 +10,4 @@ The ValidationReport demonstrates the use of JSON as input, and parsing and disp
 the SingleCharacter application, simply walks a word and displays the unique characters in the word ... duplicated letters are only displayes once.
 
 The ColorAssign application, given a particular grid determines color assignment such that no to touching areas have the same color.  The available colors are: red, green, blue and yellow.  
-The grid looks approximately like this:
-+---------+----------+-------+
-|         |     B    |       |
-|    A    |          |       |
-|         +------+---+       |
-|         |      |      D    |
-+---------+   C  |           |
-|         |      +-----------+
-|    E    +------+           |
-|         |        F         |
-|         |                  |
-+---------+------------------+
-
+The grid has five boxes surrounding one central box and "C" is in the middle, and all the outer boxes touch "C" 
