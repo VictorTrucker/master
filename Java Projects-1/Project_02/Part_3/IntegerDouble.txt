@@ -1,0 +1,25 @@
+
+
+/*
+      if ( strSideA.indexOf( '.' ) == 0 )
+        strSideA = "0";
+      if ( strSideA.indexOf( '.' ) >= 1 )
+        strSideA = stripDecimal( txtSideA.getText() );
+      if ( strSideA.length() > 2 )
+        strSideA = strSideA.substring( 0, 2 );
+      if ( strSideB.indexOf( '.' ) == 0 )
+        strSideB = "0";
+      if ( strSideB.indexOf( '.' ) >= 1 )
+        strSideB = stripDecimal( txtSideB.getText() );
+      if ( strSideB.length() > 2 )
+        strSideB = strSideB.substring( 0, 2 );
+      nSideA = Integer.parseInt( strSideA );
+      nSideB = Integer.parseInt( strSideB );
+*/
+
+
+  private String stripDecimal( String strInput )
+  {
+    return strInput.substring( 0, strInput.indexOf( '.' ) );
+  } // End stripDecimal()
+
