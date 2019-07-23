@@ -1,2 +1,2 @@
-# master
-root repository for code samples
+# C++ Code Samples
+Root repository for C++ code samples
