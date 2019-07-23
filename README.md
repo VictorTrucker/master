@@ -1,2 +1,2 @@
-# master
-root repository for code samples
+# Java Code Samples
+Root repository for Java code samples
