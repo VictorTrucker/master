@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------------------------#
 __author__ = 'Victor Trucker'
 
-import json, datetime
+import json
 from sys import argv
 from datetime import datetime
 
