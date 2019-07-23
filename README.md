@@ -1,2 +1,2 @@
-# master
-root repository for code samples
+# Master
+Root repository for C++, Java and Python code samples
