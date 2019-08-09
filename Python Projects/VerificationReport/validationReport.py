@@ -3,30 +3,30 @@
 #-------------------------------------------------------------------------------------------------#
 __author__ = 'Victor Trucker'
 
-import json
 from sys import argv
 from datetime import datetime
-
+from msvcrt import getch
+from json import load, dumps
 
 INCLUDE_JSON=False
 SANITY_CHECK=False
 VERIFY_JSON=False
 
 USAGE = '''
-╔════════[ USAGE: verificationReport.py ]═══════════╗
+╔══[ USAGE: verificationReport.py ]═════════════════╗
 ║                                                   ║
-╠═════════════════[ COMMANDLINE: ]══════════════════╣
+╠══[ COMMANDLINE: ]═════════════════════════════════╣
 ║                                                   ║
 ║     [python] verificationReport.py [/J /S /V]     ║
 ║                                                   ║
-╠═════════════════[ DESCRIPTION: ]══════════════════╣
+╠══[ DESCRIPTION: ]═════════════════════════════════╣
 ║                                                   ║
 ║  Arguments are optional and case independent. If  ║
 ║  all the arguments are ommitted just the summary  ║
 ║  gap and overlap information will be included in  ║
 ║  the report (no JSON Output or Sanity Checks).    ║
 ║                                                   ║
-╠═══════════════════[ SWITCHES: ]═══════════════════╣
+╠══[ SWITCHES: ]════════════════════════════════════╣
 ║                                                   ║
 ║    /J = Include JSON Response in Report Output    ║
 ║    /S = Sanity Checks :::::::: (for Debugging)    ║
@@ -52,7 +52,7 @@ for i in range(1,len(argv),1):
 
 # for now this just reads in the JSON for processing
 connection_file = open('validationReport.json', 'r')
-data = json.load(connection_file)
+data = load(connection_file)
 connection_file.close()
 
 # set separator and pad lengths
@@ -96,7 +96,7 @@ if VERIFY_JSON:
     print (separator)
     print ('>>> Input JSON Verification: <<<')
     print (separator)
-    print (json.dumps(data, sort_keys=False, indent=3))
+    print (dumps(data, sort_keys=False, indent=3))
     print (separator)
     print (separator)
     print (' ')
@@ -176,12 +176,15 @@ try:
     if INCLUDE_JSON:
         print ('JSON Response:')
         print (separator)
-        print (json.dumps(data, sort_keys=False, indent=3))
+        print (dumps(data, sort_keys=False, indent=3))
         print (separator)
 
     print (footerPad + reportFooter + footerPad + meinie)
     print (separator)
 
+    print('\nPress ANY Key to Exit', end = "", flush = True)
+    getch()
+ 
     raise SystemExit(0)
 
 #-------------------------------------------------------------------------------------------------#
