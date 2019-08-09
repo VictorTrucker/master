@@ -642,41 +642,22 @@ def prepClient():
     system(CLR)
     hide_cursor()
     print('\n%s' % (WAIT))
+    count = 0
 
-    try:
-        #--==#[ Set up our socket and Connect to the Server ]#==--#
-        theGame.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        theGame.client.connect((stats.conn_name, PORT))
-    except:
-        sleep(3)
+    while 1:
         try:
             #--==#[ Set up our socket and Connect to the Server ]#==--#
             theGame.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             theGame.client.connect((stats.conn_name, PORT))
+            break
         except:
-            sleep(5)
-            try:
-                #--==#[ Set up our socket and Connect to the Server ]#==--#
-                theGame.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                theGame.client.connect((stats.conn_name, PORT))
-            except:
-                sleep(8)
-                try:
-                    #--==#[ Set up our socket and Connect to the Server ]#==--#
-                    theGame.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    theGame.client.connect((stats.conn_name, PORT))
-                except:
-                    sleep(13)
-                    try:
-                        #--==#[ Set up our socket and Connect to the Server ]#==--#
-                        theGame.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                        theGame.client.connect((stats.conn_name, PORT))
-                    except:
-                        #--==#[ Remove the FAILED Host ]#==--#
-                        theGame.client = None
-                        print(padLine('■█■ CLIENT FAILURE: No Server Available ■█■', FULL_WIDTH))
-                        sleep(4)
-                        return
+            sleep(timeOuts[count])
+            count += 1
+            if count >= len(timeOuts):
+                theGame.client = None
+                print(padLine('■█■ CLIENT FAILURE: No Opponent Available ■█■', FULL_WIDTH))
+                sleep(4)
+                return
 
     #--==#[ Accept our Opponents Connection ]#==--#
     theGame.clientConn, theGame.addr = theGame.server.accept()
