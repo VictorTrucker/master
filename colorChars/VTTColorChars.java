@@ -51,7 +51,7 @@ public class VTTColorChars extends Applet implements ActionListener
       cmdMain[nLup].addActionListener( this );
     }
 
-    setSize( 750, 750 );
+    this.setSize( 750, 750 );
     this.setBackground( Color.lightGray );
     loadPallet();
 
