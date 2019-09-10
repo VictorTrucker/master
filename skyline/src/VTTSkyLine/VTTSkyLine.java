@@ -56,9 +56,9 @@ public class VTTSkyLine extends Applet implements ActionListener
       dlistStyle.add( strStyles[nLup] );
     }
 
-    setSize( 660, 330 );
     add( chkDayNight );
     add( dlistStyle );
+    this.setSize( 660, 330 );
     this.setBackground( Color.lightGray );
     chkDayNight.setBackground( Color.lightGray );
 
