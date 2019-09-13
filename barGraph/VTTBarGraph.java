@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 6 - Part 4 - VTTBarGraph.java          *
+*   Program: VTTBarGraph.java                               *
 *    Author: Victor Trucker                                 *
 *      Date: 03/14/2000                                     *
 *   Purpose: This applet accepts input of Numbers and draws *
@@ -16,14 +16,14 @@ import java.awt.event.*;
 
 public class VTTBarGraph extends Applet implements ActionListener
 {
+  private static final long
+    serialVersionUID = 1L;
   private int
     nX          = 142,
     nY          = 240,
     nCX         = 342,
     nCY         = 60,
     nNumCols    = 4;
-  private boolean
-    bFirstPass  = true;
   private String
     strBtnLabel[] = { " Graph It ", "    Reset    ", "    Close    " };
   private Button
@@ -42,6 +42,7 @@ public class VTTBarGraph extends Applet implements ActionListener
       nLup   = 0;
 
     loadPallet();
+    this.setSize( 450, 375 );
     this.setBackground( Color.lightGray );
 
     for ( nLup = 0; nLup < nNumCols; nLup++ )
@@ -64,12 +65,13 @@ public class VTTBarGraph extends Applet implements ActionListener
       cmdMain[nLup].setForeground( color[2 - nLup] );
     }
 
-    VTTUtils.say( "Project 6 - Part 4...\nBar Graph...", "Where's the Bar..." );
+    VTTUtils.say( "Simple Bar Graph...", "Where's the Bar..." );
   } // end Init()
 
 
   public void start()
   {
+	
     txtColumn[0].requestFocus();
   } // end Start()
 
@@ -77,8 +79,7 @@ public class VTTBarGraph extends Applet implements ActionListener
   public void actionPerformed( ActionEvent event )
   {
     int
-      nLup = 0,
-      nRet = -1;
+      nLup = 0;
 
     if ( event.getSource() == cmdMain[2] )
     {
@@ -114,8 +115,7 @@ public class VTTBarGraph extends Applet implements ActionListener
       nValue[]   = new int[4],
       nBarLeft[] = { nX + 15, nX + 60, nX + 105, nX + 150 },
       nBarTop[]  = { 0, 0, 0, 0 },
-      nInput     = 0,
-      nWhich     = 0;
+      nInput     = 0;
     VTTValue
       value      = new VTTValue();
     StringBuffer
@@ -206,8 +206,7 @@ public class VTTBarGraph extends Applet implements ActionListener
       nWBox  = 0,
       nHBox  = 0,
       nLup   = 0,
-      nLabel = 0,
-      nTick  = 18;
+      nLabel = 0;
     Graphics
       gr     = getGraphics();
     Color
@@ -315,7 +314,6 @@ public class VTTBarGraph extends Applet implements ActionListener
       nGraphW     = cmdMain[0].getWidth(),
       nClearW     = cmdMain[1].getWidth(),
       nCloseW     = cmdMain[2].getWidth(),
-      nOffset     = 0,
       nRowSpace   = 8,
       nLabelTop   = 120,
       nLabelLeft  = 20,
@@ -340,16 +338,11 @@ public class VTTBarGraph extends Applet implements ActionListener
       txtColumn[nLup].setLocation( nTextLeft, label[nLup].getY() );
     }
 
-    if ( bFirstPass )
-    {
-      initGraph();
-      bFirstPass = false;
-    }
-    
     gr.setColor( Color.blue );
     gr.setFont( VTTUtils.courierFont18b );
     gr.drawString( "- Bar Graph -", 165, 50 );
     gr.setColor( colorHold );
+    initGraph();
   } // end paint( Graphics )
 
 } // end class VTTBarGraph
