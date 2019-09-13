@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 6 - Part 2 - VTTColorChars.java        *
+*   Program: VTTColorChars.java                             *
 *    Author: Victor Trucker                                 *
 *      Date: 03/15/2000                                     *
 *   Purpose: This applet Randomly displays random Chars in  *
@@ -12,21 +12,22 @@
 import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 
+import javax.swing.*;
 
 public class VTTColorChars extends Applet implements ActionListener
 {
+  /**
+	 * 
+	 */
+  private static final long
+    serialVersionUID = 1L;
   private int
     nFontSize[]  = { 8, 10, 12, 18, 24, 32, 48, 72 },
     nFontStyle[] = { Font.PLAIN, Font.BOLD, Font.ITALIC },
-    nRed         = 0,
-    nGreen       = 0,
-    nBlue        = 0,
     nLup         = 0;
   private String
-    strStop       = "   Stop   ",
-    strBtnLabel[] = { "   Start   ", " Clear ", " Close " };
+    strBtnLabel[] = { "   Start   ", " Clear ", " Close ", "   Stop   " };
   private Button
     cmdMain[] = new Button[strBtnLabel.length];
   private Timer
@@ -44,7 +45,7 @@ public class VTTColorChars extends Applet implements ActionListener
 
   public void init()
   {
-    for ( nLup = 0; nLup < strBtnLabel.length; nLup++ )
+	for ( nLup = 0; nLup < strBtnLabel.length - 1; nLup++ )
     {
       cmdMain[nLup] = new Button ( strBtnLabel[nLup] );
       add( cmdMain[nLup] );
@@ -55,9 +56,9 @@ public class VTTColorChars extends Applet implements ActionListener
     this.setBackground( Color.lightGray );
     loadPallet();
 
-    VTTUtils.say( "Project 6 - Part 2...\nRandom Characters...",
+    VTTUtils.say( "Random Characters...",
                   "Oh, No!  Not again..." );
-  } // end Init()
+  } // end init()
 
 
   public void start()
@@ -68,9 +69,6 @@ public class VTTColorChars extends Applet implements ActionListener
 
   public void actionPerformed( ActionEvent event )
   {
-    int
-      nRet = -1;
-
     if ( event.getSource() == cmdMain[2] )
     {
       if ( VTTUtils.askYesNo( "Quit the Applet? Are you Crazy?", "Exit App" ) == VTTUtils.YES )
@@ -87,7 +85,7 @@ public class VTTColorChars extends Applet implements ActionListener
     {
       if ( cmdMain[0].getLabel().equals( strBtnLabel[0] ) )
       {
-        cmdMain[0].setLabel( strStop );
+        cmdMain[0].setLabel( strBtnLabel[3] );
         timer.start();
       }
       else
