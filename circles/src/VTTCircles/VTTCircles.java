@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 6 - Part 1 - VTTCircles.java           *
+*   Program: VTTCircles.java                                *
 *    Author: Victor Trucker                                 *
 *      Date: 03/14/2000                                     *
 *   Purpose: This applet draws concentric circles on the    *
@@ -50,6 +50,7 @@ public class VTTCircles extends Applet implements ActionListener
       cmdMain[nLup].addActionListener( this );
     }
 
+    this.setSize( 400, 400 );
     this.setBackground( Color.lightGray );
     cmdMain[1].setEnabled( false );
 
@@ -62,7 +63,7 @@ public class VTTCircles extends Applet implements ActionListener
                                   point[nLup - 1].getZ() + 20 );
     }
 
-    VTTUtils.say( "Project 6 - Part 1...\nConcentric Circles...",
+    VTTUtils.say( "Concentric Circles...",
                   "Round -n- Round..." );
   } // end Init()
 
