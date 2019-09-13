@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 10 - Part 1 - VTTRacer.java            *
+*   Program: VTTRacer.java                                  *
 *    Author: Victor Trucker                                 *
 *      Date: 05/01/2000                                     *
 *   Purpose: This class generates a critter to run in the   *
