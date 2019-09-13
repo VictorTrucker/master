@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 10 - Part 1 - VTTHare.java             *
+*   Program: VTTHare.java                                   *
 *    Author: Victor Trucker                                 *
 *      Date: 05/01/2000                                     *
 *   Purpose: This class generates a Hare critter to run in  *
