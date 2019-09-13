@@ -92,7 +92,7 @@ public class VTTRacerFrame extends JFrame implements ActionListener
     getContentPane().add( pnlRacer, BorderLayout.CENTER );
     getContentPane().add( statusBar, BorderLayout.SOUTH );
 
-    if ( VTTUtils.askYesNo( "Project 10 - Part 1...\nThreaded Tortoise and Hare...",
+    if ( VTTUtils.askYesNo( "Threaded Tortoise and Hare...",
                             "The Race is On..." ) == VTTUtils.NO )
     {
       System.exit( 0 );
