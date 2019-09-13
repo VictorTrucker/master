@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 6 - Part 3 - VTTSkyLine.java           *
+*   Program: VTTSkyLine.java                                *
 *    Author: Victor Trucker                                 *
 *      Date: 03/16/2000                                     *
 *   Purpose: This applet uses drawLine(), drwaRect(),       *
@@ -67,7 +67,7 @@ public class VTTSkyLine extends Applet implements ActionListener
 
     cmdMain[0].requestFocus();
 
-    VTTUtils.say( "Project 6 - Part 3...\nSkyline...", "Here we go again..." );
+    VTTUtils.say( "City Skyline Doodle...", "Here we go again..." );
 
     for ( nLup = 0; nLup < nWndw.length; nLup++ )
     {
