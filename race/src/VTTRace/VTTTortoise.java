@@ -1,5 +1,5 @@
 /************************************************************
-*   Program: Project 10 - Part 1 - VTTTortoise.java         *
+*   Program: VTTTortoise.java                               *
 *    Author: Victor Trucker                                 *
 *      Date: 05/01/2000                                     *
 *   Purpose: This class generates a Tortoise critter to run *
