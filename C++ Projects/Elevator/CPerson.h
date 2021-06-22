@@ -1,7 +1,7 @@
       //////////////////////////////////////////////////
      //  Program: Elevator Sim : CPerson.h
     //    Author: Victor Trucker
-   //       Date: 06/22/2015
+   //       Date: 03/22/2021
   // Description: Person class for each rider
  //               setting and operation params
 //////////////////////////////////////////////////

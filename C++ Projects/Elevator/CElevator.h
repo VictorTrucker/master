@@ -32,6 +32,7 @@ protected:
     m_hConsole;
   int
     m_nCurrFloor,
+    m_nMaxFloor,
     m_nCallFloor;
   bool
     m_bRider;

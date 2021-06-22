@@ -1,7 +1,7 @@
      //////////////////////////////////////////////////
     //  Program: Elevator Sim : CBuilding.cpp 
    //    Author: Victor Trucker
-  //       Date: 06/22/2015
+  //       Date: 03/22/2021
  // Description: Code for the 'Building' class
 //////////////////////////////////////////////////
 #include "CBuilding.h"
@@ -10,11 +10,11 @@ CBuilding::CBuilding( int numFloors )
 {
     srand( (unsigned)time(NULL) );
 
-    theElevator   = new CElevator;
     m_hConsole    = GetStdHandle( STD_OUTPUT_HANDLE );
     m_nFinished   = 0;
     m_nPosition.X = 0;
     m_nPosition.Y = 0;
+    m_nCurrFloor  = 1;
     m_nNumFloors  = numFloors;
     initBuilding();
 }
@@ -22,7 +22,7 @@ CBuilding::CBuilding( int numFloors )
 
 CBuilding::~CBuilding()
 {
-    delete theElevator;
+    ;
 }
 
 
@@ -46,6 +46,8 @@ bool CBuilding::createBuilding()
 {
     int
         nLup = 0;
+    string
+        nums[] = {"0","1","2","3","4","5","6","7","8","9"};
 
     cout << endl << endl;
 
@@ -68,6 +70,21 @@ bool CBuilding::createBuilding()
         cout << BUILDING[building1[nLup]];
     }
 
+    // add the floor numbers
+    for ( nLup = 1; nLup < m_nNumFloors; nLup++ )
+    {
+        int mx = m_nNumFloors - ( nLup - 1 );
+        if ( mx > 9 ) mx -= 10;
+        int wch = ( nLup > 9 ) ? ( nLup - 10 ) : nLup;
+        string digOne = " ";
+        if( m_nNumFloors - nLup >= 9 ) digOne = "1";
+        string flrNumber = digOne + nums[mx];
+        m_nPosition.X = 10;
+        m_nPosition.Y = 4 + ( nLup * 2 );
+        SetConsoleCursorPosition( m_hConsole, m_nPosition );
+        cout << flrNumber;
+    }
+
     return true;
 }
 
@@ -76,7 +93,7 @@ void CBuilding::addElevator()
 {
     int
         nOffset = 0,
-        nIndex  = ((((TOP_FLOOR + 1) - BOT_FLOOR) + 2) * 2) - 1;
+        nIndex  = ((((m_nNumFloors + 1) - BOT_FLOOR) + 2) * 2) - 1;
 
     m_nPosition.X = ELEV_BOX;
 
@@ -106,7 +123,7 @@ bool CBuilding::spawnPeople()
         person->setCurrFloor( BOT_FLOOR );
         person->setIndex_X( ENTRY );
         person->setTopFloor( m_nNumFloors );
-        person->setIndex_Y( (((TOP_FLOOR + 1) - BOT_FLOOR) + 2) * 2 );
+        person->setIndex_Y( (((m_nNumFloors + 1) - BOT_FLOOR) + 2) * 2 );
         person->setActive( false );
 
         m_vecPeople.push_back( *person );
@@ -120,17 +137,11 @@ bool CBuilding::spawnPeople()
 
 void CBuilding::openForBusiness()
 {
-    int
-        nCurrFloor = theElevator->getCurrFloor();
-
     do
     {
         checkForRiders();
-        nCurrFloor = moveElevatorToRoof( nCurrFloor );
-        theElevator->setCurrFloor( nCurrFloor );
-        openDoor( CLOSE );
-        nCurrFloor = moveElevatorToBase( nCurrFloor );
-        theElevator->setCurrFloor( nCurrFloor );
+        m_nCurrFloor = moveElevatorToRoof( );
+        m_nCurrFloor = moveElevatorToBase( );
     }
     while ( m_nFinished < MAX_PEOPLE );
 
@@ -141,7 +152,7 @@ void CBuilding::openForBusiness()
 void CBuilding::openDoor( bool bOpen ) // true=open false=close
 {
     int
-        nIndex = (((TOP_FLOOR + 1) - theElevator->getCurrFloor() ) + 2) * 2;
+        nIndex = (((m_nNumFloors + 1) - m_nCurrFloor ) + 2) * 2;
 
     if ( bOpen )
     {
@@ -152,18 +163,31 @@ void CBuilding::openDoor( bool bOpen ) // true=open false=close
         printf( PIECES[SPACE].c_str() );
         sleep( 192 );
 
-        theElevator->openDoors( bOpen );
+        openElevatorDoor( OPEN );
     }
     else
     {
-        theElevator->openDoors( bOpen );
-
+        openElevatorDoor( CLOSE );
         m_nPosition.X = ELEV_BOX - 1;
         m_nPosition.Y = nIndex;
         SetConsoleCursorPosition( m_hConsole, m_nPosition );
         printf( PIECES[PIPE].c_str() );
         sleep( 192 );
     }
+}
+
+
+void CBuilding::openElevatorDoor( bool bOpen ) // true=open false=close
+{
+    int
+        nIndex = (((m_nNumFloors + 1) - m_nCurrFloor ) + 2) * 2;
+
+    m_nPosition.X = ELEV_BOX;
+    m_nPosition.Y = nIndex;
+    SetConsoleCursorPosition( m_hConsole, m_nPosition );
+
+    printf( ( bOpen ) ? " " : "³" );
+    sleep( 192 );
 }
 
 
@@ -203,8 +227,7 @@ void CBuilding::checkForRiders()
         chName     = ' ';
     int
         nLup       = 0,
-        nIndex     = (((TOP_FLOOR + 1) - BOT_FLOOR) + 2) * 2,
-        nCurrFloor = theElevator->getCurrFloor();
+        nIndex     = (((m_nNumFloors + 1) - BOT_FLOOR) + 2) * 2;
 
     do
     {
@@ -255,11 +278,12 @@ void CBuilding::checkForRiders()
     while ( !bHit );
 
     if (m_bDoorIsOpen) openDoor( CLOSE );
+    openElevatorDoor( CLOSE );
     m_bDoorIsOpen = false;
 }
 
 
-int CBuilding::moveElevatorToRoof( int nCurrFloor )
+int CBuilding::moveElevatorToRoof( )
 {
     _vecPIt
         vecPItL;
@@ -268,13 +292,10 @@ int CBuilding::moveElevatorToRoof( int nCurrFloor )
     char
         chName = ' ';
 
-
-    openDoor( CLOSE );
-
     do
     {
-        nCurrFloor = moveElevatorOneFloor( nCurrFloor, UP );
-        nIndex = (((TOP_FLOOR + 1) - nCurrFloor) + 2) * 2;
+        m_nCurrFloor = moveElevatorOneFloor( m_nCurrFloor, UP );
+        nIndex = (((m_nNumFloors + 1) - m_nCurrFloor) + 2) * 2;
 
         for ( m_vecPIt = m_vecPeople.begin(); m_vecPIt != m_vecPeople.end(); m_vecPIt++ )
         {
@@ -282,12 +303,12 @@ int CBuilding::moveElevatorToRoof( int nCurrFloor )
 
         if ( m_vecPIt->getRider() ) 
         {
-            m_vecPIt->setCurrFloor( nCurrFloor );
+            m_vecPIt->setCurrFloor( m_nCurrFloor );
         }
 
-        if ( m_vecPIt->getCurrFloor() == nCurrFloor )
+        if ( m_vecPIt->getCurrFloor() == m_nCurrFloor )
         {
-            if ( m_vecPIt->getRider() && nCurrFloor == m_vecPIt->getDesiredFloor() )
+            if ( m_vecPIt->getRider() && m_nCurrFloor == m_vecPIt->getDesiredFloor() )
             {
                 openDoor( OPEN );
                 m_bDoorIsOpen = true;
@@ -299,7 +320,7 @@ int CBuilding::moveElevatorToRoof( int nCurrFloor )
                 m_vecPIt->setRider( false );
                 m_vecPIt->clearDesiredFloor();
                 m_vecPIt->setWantsElevator( false );
-                m_vecPIt->setCurrFloor( nCurrFloor );
+                m_vecPIt->setCurrFloor( m_nCurrFloor );
                 m_vecPIt->enterElevator( false, verifyRider() );
             }
             else if ( m_vecPIt->getWantsElevator() && !m_vecPIt->getRider() )
@@ -324,32 +345,29 @@ int CBuilding::moveElevatorToRoof( int nCurrFloor )
     m_bDoorIsOpen = false;
 
     }
-    while ( nCurrFloor < m_nMaxFloor );
+    while ( m_nCurrFloor < m_nMaxFloor );
 
-    return nCurrFloor;
+    return m_nCurrFloor;
 }
 
 
-int CBuilding::moveElevatorToBase( int nCurrFloor )
+int CBuilding::moveElevatorToBase( )
 {
     _vecPIt
         vecPItL;
     int
         nIndex = 0;
 
-    openDoor( CLOSE );
-
     do
     {
-        nCurrFloor = moveElevatorOneFloor( nCurrFloor, DN );
-        theElevator->setCurrFloor( nCurrFloor );
-        nIndex = (((TOP_FLOOR + 1) - nCurrFloor) + 2) * 2;
+        m_nCurrFloor = moveElevatorOneFloor( m_nCurrFloor, DN );
+        nIndex = (((m_nNumFloors + 1) - m_nCurrFloor) + 2) * 2;
 
         for ( vecPItL = m_vecPeople.begin(); vecPItL != m_vecPeople.end(); vecPItL++ )
         {
-            if ( vecPItL->getRider() && vecPItL->getDesiredFloor() == nCurrFloor )
+            if ( vecPItL->getRider() && vecPItL->getDesiredFloor() == m_nCurrFloor )
             {
-                vecPItL->setCurrFloor( nCurrFloor );
+                vecPItL->setCurrFloor( m_nCurrFloor );
                 openDoor( OPEN );
                 m_bDoorIsOpen = true;
                 vecPItL->setRider( false );
@@ -362,9 +380,9 @@ int CBuilding::moveElevatorToBase( int nCurrFloor )
                 SetConsoleCursorPosition( m_hConsole, m_nPosition );
                 printf( ( verifyRider() ) ? PIECES[PERSON].c_str() : PIECES[SPACE].c_str() );
 
-                vecPItL->setCurrFloor( nCurrFloor );
+                vecPItL->setCurrFloor( m_nCurrFloor );
 
-                if ( nCurrFloor == BOT_FLOOR && vecPItL->getIndex_X() >= WAITER )
+                if ( m_nCurrFloor == BOT_FLOOR && vecPItL->getIndex_X() >= WAITER )
                 {
                   vecPItL->setActive( false );
                   vecPItL->setFinished( true );
@@ -377,7 +395,7 @@ int CBuilding::moveElevatorToBase( int nCurrFloor )
         if (m_bDoorIsOpen) openDoor( CLOSE );
         m_bDoorIsOpen = false;
 
-        if ( BOT_FLOOR == nCurrFloor ) break;
+        if ( BOT_FLOOR == m_nCurrFloor ) break;
     }
     while ( 1 );
 
@@ -385,28 +403,25 @@ int CBuilding::moveElevatorToBase( int nCurrFloor )
 }
 
 
-int CBuilding::moveElevatorOneFloor( int nCurrFloor, int nDirection )
+int CBuilding::moveElevatorOneFloor( int nFloor, int nDirection )
 {
     int
         nOffset = 0,
-        nIndex  = (((TOP_FLOOR + 1) - nCurrFloor) + 2) * 2;
+        nIndex  = (((m_nNumFloors + 1) - m_nCurrFloor) + 2) * 2;
     _vecPIt
         vecPItL;
     bool
         bRider = verifyRider();
 
-    theElevator->setRider( bRider );
+    if ((BOT_FLOOR == nFloor && DN == nDirection) ||
+        (m_nNumFloors == nFloor && UP == nDirection)) return nFloor;
 
-    if ((BOT_FLOOR == nCurrFloor && DN == nDirection) ||
-        (TOP_FLOOR == nCurrFloor && UP == nDirection)) return nCurrFloor;
-
-//    if ( nDirection == DN ) sleep( 64 );
     sleep( 64 );
 
     m_nPosition.X = ELEV_BOX;
     m_nPosition.Y = nIndex + nDirection;
     SetConsoleCursorPosition( m_hConsole, m_nPosition );
-    printf( ( TOP_FLOOR == nCurrFloor || BOT_FLOOR == nCurrFloor )
+    printf( ( m_nNumFloors == m_nCurrFloor || BOT_FLOOR == m_nCurrFloor )
             ? ELEVATOR[HORZ_BAR].c_str() : ELEVATOR[SPACES].c_str() );
 
     nOffset = 0;
@@ -440,8 +455,8 @@ int CBuilding::moveElevatorOneFloor( int nCurrFloor, int nDirection )
                       : ELEVATOR[EL_BODY].c_str() );
     }
 
-    theElevator->setCurrFloor( nCurrFloor + nDirection );
-    return nCurrFloor + nDirection;
+    m_nCurrFloor = nFloor + nDirection;
+    return nFloor + nDirection;
 }
 
 

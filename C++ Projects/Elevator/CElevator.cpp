@@ -6,12 +6,13 @@
 //////////////////////////////////////////////////
 #include "CBuilding.h"
 
-CElevator::CElevator()
+CElevator::CElevator( int nMaxFloor )
 {
     m_hConsole    = GetStdHandle( STD_OUTPUT_HANDLE );
     m_nPosition.X = 0;
     m_nPosition.Y = 0;
     m_nCurrFloor  = 1;
+    m_nMaxFloor   = nMaxFloor;
     m_nCallFloor  = 0;
     m_bRider      = false;
 }
@@ -26,13 +27,13 @@ CElevator::~CElevator()
 bool CElevator::openDoors( bool bOpen ) // true=open false=close
 {
     int
-        nIndex = (((TOP_FLOOR + 1) - m_nCurrFloor ) + 2) * 2;
+        nIndex = (((m_nMaxFloor + 1) - m_nCurrFloor ) + 2) * 2;
 
-    m_nPosition.X = ELEV_BOX;
+    m_nPosition.X = ELEV_BOX - 1;
     m_nPosition.Y = nIndex;
     SetConsoleCursorPosition( m_hConsole, m_nPosition );
 
-    printf( ( bOpen ) ? " " : "³" );
+    printf( ( bOpen ) ? "  " : "³³" );
     sleep( 192 );
 
     return true;

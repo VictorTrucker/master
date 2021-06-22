@@ -1,7 +1,7 @@
      //////////////////////////////////////////////////
     //  Program: Elevator Sim : CPerson.cpp 
    //    Author: Victor Trucker
-  //       Date: 06/22/2015
+  //       Date: 03/22/2021
  // Description: Code for the 'Person' class
 //////////////////////////////////////////////////
 #include "CBuilding.h"
@@ -64,7 +64,7 @@ void CPerson::setDesiredFloor( int nCurrFloor )
 void CPerson::callElevator()
 {
     int
-        nIndex = (((TOP_FLOOR + 1) - m_nCurrFloor ) + 2) * 2;
+        nIndex = (((m_nTopFloor + 1) - m_nCurrFloor ) + 2) * 2;
 
     m_nPosition.Y = nIndex;
     m_nPosition.X = (int)m_chName - 44;
@@ -81,7 +81,7 @@ void CPerson::enterBuilding( bool bEnter )
 {
     int
         nLup   = 0,
-        nIndex = (((TOP_FLOOR + 1) - m_nCurrFloor ) + 2) * 2;
+        nIndex = (((m_nTopFloor + 1) - m_nCurrFloor ) + 2) * 2;
 
     m_nPosition.Y = nIndex;
 
@@ -132,34 +132,23 @@ void CPerson::enterBuilding( bool bEnter )
         m_nIndex_X = m_nPosition.X;
         m_nIndex_Y = m_nPosition.Y;
     }
+
+    m_nPosition.X = 10;
+    m_nPosition.Y = m_nIndex_Y;
+    SetConsoleCursorPosition( m_hConsole, m_nPosition );
+    cout << " 1";
 }
 
 
 void CPerson::enterElevator( bool bEnter, bool bRiders )
 {
     int
-        nIndex = (((TOP_FLOOR + 1) - m_nCurrFloor ) + 2) * 2;
+        nIndex = (((m_nTopFloor + 1) - m_nCurrFloor ) + 2) * 2;
 
     m_bRider = bEnter; //true=enter=rider - false=exit=not rider
     m_nPosition.Y = nIndex;
 
-    if ( bEnter )
-    {
-        for ( int nLup = WAITER; nLup < RIDER; nLup++ )
-        {
-            m_nPosition.X = nLup;
-            SetConsoleCursorPosition( m_hConsole, m_nPosition );
-            cout << PIECES[SPACE].c_str();
-            m_nPosition.X = nLup + 1;
-            SetConsoleCursorPosition( m_hConsole, m_nPosition );
-            cout << m_chName;
-
-            m_nIndex_X = m_nPosition.X;
-            m_nIndex_Y = m_nPosition.Y;
-            sleep( 125 );
-        }
-    }
-    else
+    if ( !bEnter )
     {
         for ( int nLup = RIDER; nLup > WAITER; nLup-- )
         {
@@ -174,6 +163,7 @@ void CPerson::enterElevator( bool bEnter, bool bRiders )
             m_nIndex_X = m_nPosition.X;
             m_nIndex_Y = m_nPosition.Y + 6;
             if ( nLup == WAITER ) break;
+
             sleep( 125 );
         }
 
@@ -186,6 +176,22 @@ void CPerson::enterElevator( bool bEnter, bool bRiders )
             m_nPosition.X = (int)m_chName - 44;
             SetConsoleCursorPosition( m_hConsole, m_nPosition );
             cout << m_chName;
+        }
+    }
+    else
+    {
+        for ( int nLup = WAITER; nLup < RIDER; nLup++ )
+        {
+            m_nPosition.X = nLup;
+            SetConsoleCursorPosition( m_hConsole, m_nPosition );
+            cout << PIECES[SPACE].c_str();
+            m_nPosition.X = nLup + 1;
+            SetConsoleCursorPosition( m_hConsole, m_nPosition );
+            cout << m_chName;
+
+            m_nIndex_X = m_nPosition.X;
+            m_nIndex_Y = m_nPosition.Y;
+            sleep( 125 );
         }
     }
 }
